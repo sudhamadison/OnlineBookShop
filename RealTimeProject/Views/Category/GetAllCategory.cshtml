@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Category>
+
+<partial name="_Notification" />
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Category List</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Category" asp-action="AddCategory" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i>  Create New Category
+                </a>
+            </div>
+        </div>
+
+        @* <table class="table table-bordered table-striped" id="CategoryTable">  *@
+        <table class="table table-bordered table-striped" id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Category Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td>@obj.Name</td>
+                        <td>
+                            @obj.Description
+                        </td>
+                        <td>
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Category" asp-action="EditCategory" asp-route-id="@obj.CategoryId" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@obj.CategoryId" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+@* @section scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/2.1.3/js/dataTables.min.js"></script>
+    <script src="~/js/CategoryDataTable.js"></script>
+} *@
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>
+
+    <script>
+
+        //new DataTable('#example');
+        new DataTable('#example', { //customized page length
+            lengthMenu: [
+                [10, 20, 30, -1],
+                [10, 20, 30, 'All']
+            ]
+        });
+    </script>
+}
