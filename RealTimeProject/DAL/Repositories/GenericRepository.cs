@@ -39,7 +39,15 @@ namespace RealTimeProject.DAL.Repositories
 
         public void Update(T entity)
         {
-            _context.Set<T>().Update(entity);
+            if(entity != null)
+            {
+                _context.Entry(entity).State = EntityState.Detached;
+                _context.Set<T>().Update(entity);
+                _context.SaveChanges();
+            }
+            else
+            { _context.Set<T>().Update(entity); }
+           
         }
 
 

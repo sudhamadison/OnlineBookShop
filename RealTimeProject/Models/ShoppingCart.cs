@@ -14,9 +14,10 @@ namespace RealTimeProject.Models
 
         public int Count  { get; set; }
 
-        public string UserId { get; set; }
-
-        public  double Price { get; set; }  
+        public  double Price { get; set; }
+        public string ApplicationUserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
+        public ApplicationUser? ApplicationUser { get; set; }
 
 
     }

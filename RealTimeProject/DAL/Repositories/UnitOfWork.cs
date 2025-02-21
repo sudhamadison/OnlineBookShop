@@ -1,4 +1,6 @@
 ﻿using RealTimeProject.DAL.Interfaces;
+using RealTimeProject.Models;
+using RealTimeProject.Services.Interfaces;
 
 namespace RealTimeProject.DAL.Repositories
 {
@@ -10,19 +12,21 @@ namespace RealTimeProject.DAL.Repositories
         public IProductRepository ProductRepository { get; }
        
         public IProductImagesRepository ProductImagesRepository { get; }
+        public IShoppingCartRepository ShoppingCartRepository { get; }
 
-
-
-        public UnitOfWork(ApplicationContext context, ICategoryRepository categoryRepository, IProductRepository productRepository, IProductImagesRepository productImagesRepository)
+        
+        public UnitOfWork(ApplicationContext context, ICategoryRepository categoryRepository, IProductRepository productRepository, IProductImagesRepository productImagesRepository, IShoppingCartRepository shoppingCartRepository)
             {
                 _context = context;
                 CategoryRepository = categoryRepository;
                 ProductRepository = productRepository;
             ProductImagesRepository = productImagesRepository;
+            ShoppingCartRepository = shoppingCartRepository;
+          
 
         }
 
-            public void Dispose()
+        public void Dispose()
             {
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -41,7 +45,7 @@ namespace RealTimeProject.DAL.Repositories
                 return _context.SaveChanges();
             }
 
-           
-        }
+      
+    }
     }
 
