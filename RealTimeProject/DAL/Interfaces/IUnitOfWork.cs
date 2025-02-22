@@ -1,4 +1,7 @@
-﻿namespace RealTimeProject.DAL.Interfaces
+﻿using RealTimeProject.Models;
+using RealTimeProject.Services.Interfaces;
+
+namespace RealTimeProject.DAL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -6,6 +9,12 @@
         IProductRepository ProductRepository { get; }
       
         IProductImagesRepository ProductImagesRepository { get; }
+        IShoppingCartRepository ShoppingCartRepository { get; }
+        
+
+
+
         int Save();
+        
     }
 }
