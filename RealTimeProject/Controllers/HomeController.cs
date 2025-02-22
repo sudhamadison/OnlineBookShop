@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using RealTimeProject.DAL.Interfaces;
 using RealTimeProject.DAL.Repositories;
 using RealTimeProject.DTO;
+using RealTimeProject.Migrations;
 using RealTimeProject.Models;
 using RealTimeProject.Services.Interfaces;
 using RealTimeProject.Services.ServiceImplementation;
@@ -58,20 +59,22 @@ namespace RealTimeProject.Controllers
             shoppingCart.Price = productFromDb.Price;
             if(cartFromDb != null) //if we add same product again(more)  that should update in the database.It should not create new entry.
             {
-                shoppingCart.ShoppingCartId = cartFromDb.ShoppingCartId;   //for update statement we need to know which(where condition)  row should be updated..    
-                shoppingCart.Count += cartFromDb.Count;
-                _unitOfWork.ShoppingCartRepository.Update(shoppingCart);
+                //shoppingCart.ShoppingCartId = cartFromDb.ShoppingCartId;   //for update statement we need to know which(where condition)  row should be updated..    
+                //shoppingCart.Count += cartFromDb.Count;
+                //_unitOfWork.ShoppingCartRepository.Update(shoppingCart);
+                //_unitOfWork.Save();
+
+                cartFromDb.Count += shoppingCart.Count ;
+                _unitOfWork.ShoppingCartRepository.Update(cartFromDb);
                 _unitOfWork.Save();
             }
             else
             {
                 _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
                 _unitOfWork.Save();
-
             }
-            _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
-            _unitOfWork.Save();
-            return View("Index");
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

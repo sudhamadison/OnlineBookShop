@@ -39,43 +39,46 @@ namespace RealTimeProject.DAL.Repositories
 
         public void Update(T entity)
         {
-            if(entity != null)
-            {
-                _context.Entry(entity).State = EntityState.Detached;
-                _context.Set<T>().Update(entity);
-                _context.SaveChanges();
-            }
-            else
-            { _context.Set<T>().Update(entity); }
-           
+            //if(entity != null)
+            //{
+            //    _context.Entry(entity).State = EntityState.Detached;
+            //    _context.Set<T>().Update(entity);
+            //    _context.SaveChanges();
+            //}
+            //else
+            //{ 
+            //    _context.Set<T>().Update(entity);
+            //}
+            _context.Set<T>().Update(entity);
+
         }
 
 
-       public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query;
             query = dbSet;
-            query=query.Where(filter);
-            if(!string.IsNullOrEmpty(includeProperties))
+            query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach (var property in includeProperties.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(property);
                 }
-                
+
             }
             return query.FirstOrDefault();
         }
 
         public IEnumerable<T> GetList(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
-           IQueryable<T> query;
+            IQueryable<T> query;
             query = dbSet;
-            if(filter!= null)
+            if (filter != null)
             {
                 query = query.Where(filter);
             }
-           
+
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
