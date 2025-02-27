@@ -23,7 +23,7 @@ namespace RealTimeProject.Models
         public string Author { get; set; }
 
         [Required]
-        public float Price { get; set; }
+        public decimal Price { get; set; }
 
         public int CategoryId { get; set; }
 

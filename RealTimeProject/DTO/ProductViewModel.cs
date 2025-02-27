@@ -20,7 +20,7 @@ namespace RealTimeProject.DTO
         [Required]
         public string Author { get; set; }
         [Required]
-        public float Price { get; set; }
+        public decimal Price { get; set; }
         public string CategoryName { get; set; }
 
         public List<ProductImages> ProductImages { get; set;}
