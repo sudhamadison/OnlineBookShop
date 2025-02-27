@@ -50,8 +50,8 @@ namespace RealTimeProject.Controllers
         [HttpPost]
         public IActionResult Details(ShoppingCart shoppingCart) //method for AddToCart
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity; //once user logged in only we can add items in cart.That is our design.with the help of that we r getting user identity and assign that into a variable called claimsIdentity.
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value; // we r getting the value(Id in the AspNetUser Table) of claimIdentity(Current user)[current user Id number].
+            var claimsIdentity = (ClaimsIdentity)User.Identity; //once user logged in only we can add items in cart.That is our design.with the help of that we r getting user identity and assign that into a variable called claimsIdentity.(It is checking if the user is a Identity user[Registered user]or not)
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value; // we r getting the value(Id in the AspNetUser Table) of claimIdentity(Current user)[current user Id number].(If it is a Identity user then it will get the user Id detail from database)
             var productFromDb = _unitOfWork.ProductRepository.Get(u => u.ProductId == shoppingCart.ProductId, includeProperties: "Category,ProductImages");
 
             var cartFromDb=_unitOfWork.ShoppingCartRepository.Get(u=>u.ApplicationUserId == userId &&  u.ProductId == shoppingCart.ProductId);//cart from db is the already added product in the cart.
