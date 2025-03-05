@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration.UserSecrets;
 using RealTimeProject.DAL.Interfaces;
 using RealTimeProject.Migrations;
 using RealTimeProject.Models;
+using RealTimeProject.Models.ViewModel;
 using System.Security.Claims;
 
 namespace RealTimeProject.Controllers
@@ -22,11 +23,11 @@ namespace RealTimeProject.Controllers
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             List<ShoppingCart> sk = _unitOfWork.ShoppingCartRepository.GetList(u => u.ApplicationUserId == userId, includeProperties: "Product").ToList();
             //check Get() and GetList() in Generic Repository(Instead of joining more tables[Product,Category,ProductImages] we have created this Get[This one with filter to bring particular record] and GetList[This one without filter to bring list of record] method using  where clause[Filter].) with include properties.
-
+           
             IEnumerable<ProductImages> productImages = _unitOfWork.ProductImagesRepository.GetList(); //this line will bring all the imges from the productImages table.         
             foreach(var cart in sk)
             {
-                cart.Product.ProductImages = productImages.Where(x => x.ProductId == cart.Product.ProductId).ToList();
+                cart.Product.ProductImages = productImages.Where(x => x.ProductId == cart.Product.ProductId).ToList();//This line helps to assign particular product images into ProductImages column in ShoppingCart Table.
                 cart.Price = GetPriceBasedOnQuantity(cart);
             }
             return View();
