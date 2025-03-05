@@ -28,7 +28,7 @@ namespace RealTimeProject.Models
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Category  Category { get; set; } //first category denotes category table and second one is the column name 
+        public Category  Category { get; set; } //first category denotes category table and second one is the column name
 
         [ValidateNever]
         public string ImageUrl {  get; set; }
