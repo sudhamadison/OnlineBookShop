@@ -21,22 +21,30 @@ namespace RealTimeProject.Controllers
         {
             var claimsIdentity=(ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<ShoppingCart> sk = _unitOfWork.ShoppingCartRepository.GetList(u => u.ApplicationUserId == userId, includeProperties: "Product").ToList();
+
+            //List<ShoppingCart> sk = _unitOfWork.ShoppingCartRepository.GetList(u => u.ApplicationUserId == userId, includeProperties: "Product").ToList();
+
             //check Get() and GetList() in Generic Repository(Instead of joining more tables[Product,Category,ProductImages] we have created this Get[This one with filter to bring particular record] and GetList[This one without filter to bring list of record] method using  where clause[Filter].) with include properties.
-           
+            ShoppingCartVM shoppingCartVM = new ShoppingCartVM()
+            {
+                shoppingCartList = _unitOfWork.ShoppingCartRepository.GetList(u => u.ApplicationUserId == userId, includeProperties: "Product").ToList(),
+
+                orderHeader = new()
+            };
             IEnumerable<ProductImages> productImages = _unitOfWork.ProductImagesRepository.GetList(); //this line will bring all the imges from the productImages table.         
-            foreach(var cart in sk)
+            foreach(var cart in shoppingCartVM.shoppingCartList)
             {
                 cart.Product.ProductImages = productImages.Where(x => x.ProductId == cart.Product.ProductId).ToList();//This line helps to assign particular product images into ProductImages column in ShoppingCart Table.
                 cart.Price = GetPriceBasedOnQuantity(cart);
+                shoppingCartVM.orderHeader.OrderTotal += (cart.Product.Price * cart.Count);
             }
-            return View();
+            return View(shoppingCartVM);
         }
 
         private decimal GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
         {
             decimal finalPrice = 0;
-            if(shoppingCart==null)
+            if(shoppingCart!=null)
             {
                 finalPrice = shoppingCart.Count * shoppingCart.Price;
             }
