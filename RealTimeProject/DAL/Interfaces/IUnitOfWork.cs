@@ -11,6 +11,7 @@ namespace RealTimeProject.DAL.Interfaces
         IProductImagesRepository ProductImagesRepository { get; }
         IShoppingCartRepository ShoppingCartRepository { get; }
         IApplicationUserRepository ApplicationUserRepository { get; }
+        IOrderHeaderRepository OrderHeaderRepository { get; }
 
 
 

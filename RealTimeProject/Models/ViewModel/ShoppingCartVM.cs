@@ -2,7 +2,7 @@
 {
     public class ShoppingCartVM
     {
-        public IEnumerable<ShoppingCart> shoppingCartList { get; set; }
-        public OrderHeader orderHeader { get; set; }
+        public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
+        public OrderHeader OrderHeader { get; set; }
     }
 }
