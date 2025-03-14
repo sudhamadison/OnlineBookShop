@@ -14,16 +14,17 @@ namespace RealTimeProject.DAL.Repositories
         public IProductImagesRepository ProductImagesRepository { get; }
         public IShoppingCartRepository ShoppingCartRepository { get; }
         public IApplicationUserRepository ApplicationUserRepository { get; }
+        public IOrderHeaderRepository OrderHeaderRepository { get; }
 
-
-        public UnitOfWork(ApplicationContext context, ICategoryRepository categoryRepository, IProductRepository productRepository, IProductImagesRepository productImagesRepository, IShoppingCartRepository shoppingCartRepository)
+        public UnitOfWork(ApplicationContext context, ICategoryRepository categoryRepository, IProductRepository productRepository, IProductImagesRepository productImagesRepository, IShoppingCartRepository shoppingCartRepository, IApplicationUserRepository  applicationUserRepository)
             {
                 _context = context;
                 CategoryRepository = categoryRepository;
                 ProductRepository = productRepository;
             ProductImagesRepository = productImagesRepository;
             ShoppingCartRepository = shoppingCartRepository;
-          
+            ApplicationUserRepository = applicationUserRepository;
+
 
         }
 

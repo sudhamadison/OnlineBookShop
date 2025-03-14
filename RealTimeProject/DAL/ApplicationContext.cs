@@ -14,6 +14,11 @@ namespace RealTimeProject.DAL
         public DbSet<ProductImages> ProductImages { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<OrderHeader> OrderHeader { get; set; }
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    base.OnModelCreating(builder);
+        //}
 
     }
 }
