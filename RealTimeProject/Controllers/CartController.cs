@@ -94,19 +94,19 @@ namespace RealTimeProject.Controllers
             };
 
             shoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUserRepository.Get(u => u.Id == userId);
-            shoppingCartVM.OrderHeader.Name = shoppingCartVM.OrderHeader.Name;
-            shoppingCartVM.OrderHeader.Address = shoppingCartVM.OrderHeader.Address;
-            shoppingCartVM.OrderHeader.PhoneNumber = shoppingCartVM.OrderHeader.PhoneNumber;
-            shoppingCartVM.OrderHeader.City = shoppingCartVM.OrderHeader.City;
-            shoppingCartVM.OrderHeader.Carrier = shoppingCartVM.OrderHeader.Carrier;
+            shoppingCartVM.OrderHeader.Name = shoppingCartVM.OrderHeader.ApplicationUser.Name;
+            shoppingCartVM.OrderHeader.Address = shoppingCartVM.OrderHeader.ApplicationUser.StreetAddress;
+            shoppingCartVM.OrderHeader.PhoneNumber = shoppingCartVM.OrderHeader.ApplicationUser.PhoneNumber;
+            shoppingCartVM.OrderHeader.City = shoppingCartVM.OrderHeader.ApplicationUser.City;
+            shoppingCartVM.OrderHeader.Carrier = "Indigo";
 
             IEnumerable<ProductImages> productImages = _unitOfWork.ProductImagesRepository.GetList(); //this line will bring all the imges from the productImages table.         
             foreach (var cart in shoppingCartVM.ShoppingCartList)
             {
                 cart.Product.ProductImages = productImages.Where(x => x.ProductId == cart.Product.ProductId).ToList();//This line helps to assign particular product images into ProductImages column in ShoppingCart Table.
                 cart.Price = GetPriceBasedOnQuantity(cart);
-                shoppingCartVM.OrderHeader.OrderTotal += (cart.Product.Price * cart.Count);
-            }
+                shoppingCartVM.OrderHeader.OrderTotal += cart.Price;
+			}
             return View(shoppingCartVM);
         }
 
