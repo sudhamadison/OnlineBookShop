@@ -10,9 +10,17 @@ namespace RealTimeProject.Services.ServiceImplementation
         public IUnitOfWork _unitOfWork;
         public ApplicationUserService(IUnitOfWork unitOfWork) { _unitOfWork = unitOfWork; }
 
+
+
         public void Update(ApplicationUser applicationUser)
         {
-            _unitOfWork.ApplicationUserRepository.Update(applicationUser);
+
+
+           
         }
+
+        }
+
     }
-}
+    
+
